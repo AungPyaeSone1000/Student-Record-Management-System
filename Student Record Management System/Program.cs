@@ -123,11 +123,14 @@ namespace Student_Record_Management_System
                     case 1:
                         Console.WriteLine("Enter student's ID");
                         int id = Convert.ToInt32(Console.ReadLine());
-                        Student studentById = students.Find(student => student.ID == id);
+                        List<Student> studentById = students.FindAll(student => student.ID == id);
                         if (studentById != null)
                         {
-                            Console.WriteLine($"Name: {studentById.Name} || ID: {studentById.ID} || GPA: {studentById.ID}");
+                        foreach (Student student in studentById)
+                        {
+                            Console.WriteLine($"Name: {student.Name}, ID: {student.ID}, GPA: {student.GPA}");
                         }
+                    }
                         else
                         {
                             Console.WriteLine("There is not student with such ID.");
@@ -137,7 +140,24 @@ namespace Student_Record_Management_System
                         Console.Clear();
                         break;
                     case 2:
-                        break;
+                    Console.WriteLine("Enter student's Name.");
+                    string name = Console.ReadLine();
+                    List<Student> studentsName = students.FindAll(student => student.Name.Contains(name));
+                    if (studentsName != null)
+                    {
+                        foreach (Student student in studentsName)
+                        {
+                            Console.WriteLine($"Name: {student.Name}, ID: {student.ID}, GPA: {student.GPA}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("There is not student with such name.");
+                    }
+                    Console.WriteLine("Press any key to continue.");
+                    Console.ReadKey();
+                    Console.Clear();
+                    break;
                     default:
                         Console.WriteLine("Invalid Input");
                         break;

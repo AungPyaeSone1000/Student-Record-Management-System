@@ -10,6 +10,7 @@ namespace Student_Record_Management_System
         static List<Student> students = new List<Student>();
         static void Main(string[] args)
         {
+            LoadData();
             bool condition = true;
             while (condition)
             {
@@ -21,39 +22,48 @@ namespace Student_Record_Management_System
                 Console.WriteLine("5. Display summary");
                 Console.WriteLine("6. Exit");
                 Console.Write("Enter your option from 1 to 6: ");
-
-                int choice = Convert.ToInt32(Console.ReadLine());
-                switch (choice)
+                try
                 {
-                    case 1:
-                        Console.Clear();
-                        AddNewStudent();
-                        break;
-                    case 2:
-                        Console.Clear();
-                        DisplayStudents();
-                        break;
-                    case 3:
-                        Console.Clear();
-                        SearchStudent();
-                        break;
-                    case 4:
-                        Console.Clear();
-                        DeleteStudent();
-                        break;
-                    case 5:
-                        Console.Clear();
-                        Summary();
-                        break;
-                    case 6:
-                        Console.Clear();
-                        Console.WriteLine("Exitiing Program.");
-                        condition = false;
-                        break;
-                    default:
-                        Console.Clear();
-                        Console.WriteLine("Invalid Input. Please try again.");
-                        break;
+                    int choice = Convert.ToInt32(Console.ReadLine());
+                    switch (choice)
+                    {
+                        case 1:
+                            Console.Clear();
+                            AddNewStudent();
+                            break;
+                        case 2:
+                            Console.Clear();
+                            DisplayStudents();
+                            break;
+                        case 3:
+                            Console.Clear();
+                            SearchStudent();
+                            break;
+                        case 4:
+                            Console.Clear();
+                            DeleteStudent();
+                            break;
+                        case 5:
+                            Console.Clear();
+                            Summary();
+                            break;
+                        case 6:
+                            Console.Clear();
+                            Console.WriteLine("Exitiing Program.");
+                            condition = false;
+                            break;
+                        default:
+                            Console.Clear();
+                            Console.WriteLine("Invalid Input. Please try again.");
+                            Thread.Sleep(1200);
+                            break;
+                    }
+                }
+                catch
+                {
+                    Console.Clear();
+                    Console.WriteLine("Invalid Input. Please try again");
+                    Thread.Sleep(1200);
                 }
             } 
         }
@@ -62,38 +72,47 @@ namespace Student_Record_Management_System
             bool condition = true;
             while (condition)
             {
-                Console.Write("Enter student's name: ");
-                string name = Console.ReadLine();
-                Console.Write("Enter student's ID: ");
-                int id = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Enter student's GPA: ");
-                double gpa = Convert.ToDouble(Console.ReadLine());
+                try
+                {
+                    Console.Write("Enter student's name: ");
+                    string name = Console.ReadLine();
+                    Console.Write("Enter student's ID: ");
+                    int id = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Enter student's GPA: ");
+                    double gpa = Convert.ToDouble(Console.ReadLine());
 
-                Student student = new Student
-                {
-                    Name = name,
-                    ID = id,
-                    GPA = gpa
-                };
-                students.Add(student);
-                Console.Clear();
-                char ans;
-                do
-                {
-                    Console.WriteLine("Do you wish to add more student?(Y/N)");
-                    ans = Convert.ToChar(Console.ReadLine());
-                    if (Char.ToUpper(ans) != 'N' && Char.ToUpper(ans) != 'Y')
+                    Student student = new Student
                     {
-                        Console.WriteLine("Invalid Input. Please try again.");
-                        Thread.Sleep(1200);
-                        Console.Clear();
-                    }
-
-                } while (Char.ToUpper(ans) != 'N' && Char.ToUpper(ans) != 'Y');
-                if (Char.ToUpper(ans) == 'N')
-                {
+                        Name = name,
+                        ID = id,
+                        GPA = gpa
+                    };
+                    students.Add(student);
                     Console.Clear();
-                    condition = false;
+                    char ans;
+                    do
+                    {
+                        Console.WriteLine("Do you wish to add more student?(Y/N)");
+                        ans = Convert.ToChar(Console.ReadLine());
+                        if (Char.ToUpper(ans) != 'N' && Char.ToUpper(ans) != 'Y')
+                        {
+                            Console.WriteLine("Invalid Input. Please try again.");
+                            Thread.Sleep(1200);
+                            Console.Clear();
+                        }
+
+                    } while (Char.ToUpper(ans) != 'N' && Char.ToUpper(ans) != 'Y');
+                    if (Char.ToUpper(ans) == 'N')
+                    {
+                        Console.Clear();
+                        condition = false;
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid Input. Please try again.");
+                    Thread.Sleep(1200);
+                    Console.Clear();
                 }
             }
         }
@@ -114,7 +133,6 @@ namespace Student_Record_Management_System
             Console.WriteLine("Search the student by:");
             Console.WriteLine("1. ID.");
             Console.WriteLine("2. Name. ");
-            Console.WriteLine("3. Go back.");
             int choice = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
             
@@ -152,7 +170,7 @@ namespace Student_Record_Management_System
                     }
                     else
                     {
-                        Console.WriteLine("There is not student with such name.");
+                        Console.WriteLine("There is not student with such Name.");
                     }
                     Console.WriteLine("Press any key to continue.");
                     Console.ReadKey();
@@ -170,6 +188,10 @@ namespace Student_Record_Management_System
 
         }
         static void Summary()
+        {
+
+        }
+        static void LoadData()
         {
 
         }

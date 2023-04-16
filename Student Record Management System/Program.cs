@@ -49,6 +49,7 @@ namespace Student_Record_Management_System
                             break;
                         case 6:
                             Console.Clear();
+                            SaveDataToTextFile();
                             Console.WriteLine("Exitiing Program.");
                             condition = false;
                             break;
@@ -121,7 +122,7 @@ namespace Student_Record_Management_System
             Console.WriteLine("All Students: ");
             foreach (var student in students)
             {
-                Console.WriteLine($"Name: {student.Name} || ID: {student.ID} || GPA: {student.ID}");
+                Console.WriteLine($"Name: {student.Name} || ID: {student.ID} || GPA: {student.GPA}");
             }
             Console.WriteLine("Press any key to continue.");
             Console.ReadKey();
@@ -135,29 +136,29 @@ namespace Student_Record_Management_System
             Console.WriteLine("2. Name. ");
             int choice = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
-            
-                switch (choice)
-                {
-                    case 1:
-                        Console.WriteLine("Enter student's ID");
-                        int id = Convert.ToInt32(Console.ReadLine());
-                        List<Student> studentById = students.FindAll(student => student.ID == id);
-                        if (studentById != null)
-                        {
+
+            switch (choice)
+            {
+                case 1:
+                    Console.WriteLine("Enter student's ID");
+                    int id = Convert.ToInt32(Console.ReadLine());
+                    List<Student> studentById = students.FindAll(student => student.ID == id);
+                    if (studentById != null)
+                    {
                         foreach (Student student in studentById)
                         {
                             Console.WriteLine($"Name: {student.Name}, ID: {student.ID}, GPA: {student.GPA}");
                         }
                     }
-                        else
-                        {
-                            Console.WriteLine("There is not student with such ID.");
-                        }
-                        Console.WriteLine("Press any key to continue.");
-                        Console.ReadKey();
-                        Console.Clear();
-                        break;
-                    case 2:
+                    else
+                    {
+                        Console.WriteLine("There is not student with such ID.");
+                    }
+                    Console.WriteLine("Press any key to continue.");
+                    Console.ReadKey();
+                    Console.Clear();
+                    break;
+                case 2:
                     Console.WriteLine("Enter student's Name.");
                     string name = Console.ReadLine();
                     List<Student> studentsName = students.FindAll(student => student.Name.Contains(name));
@@ -176,22 +177,78 @@ namespace Student_Record_Management_System
                     Console.ReadKey();
                     Console.Clear();
                     break;
-                    default:
-                        Console.WriteLine("Invalid Input");
-                        break;
-                }
-            
+                default:
+                    Console.WriteLine("Invalid Input");
+                    break;
+            }
+        
 
         }
         static void DeleteStudent()
         {
 
+            Console.WriteLine("Delete the student by:");
+            Console.WriteLine("1. ID.");
+            Console.WriteLine("2. Name. ");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
+            switch (choice)
+            {
+                case 1:
+                    Console.WriteLine("Enter student's ID");
+                    int id = Convert.ToInt32(Console.ReadLine());
+
+                    Student studentToDelete = students.Find(student => student.ID == id);
+                    if (studentToDelete == null)
+                    {
+                        Console.WriteLine("Student not found.");
+
+                    }
+                    else
+                    {
+                        while (studentToDelete != null)
+                        {
+                            students.Remove(studentToDelete);
+                            studentToDelete = students.Find(student => student.ID == id);
+                        }
+                        Console.WriteLine("Deletion done.");
+                    }
+
+                    break;
+                case 2:
+                    Console.WriteLine("Enter student's Name");
+                    string name = Console.ReadLine();
+                    Student studentToDelete1 = students.Find(student => student.Name == name);
+                    if (studentToDelete1 == null)
+                    {
+                        Console.WriteLine("Student not found.");
+
+                    }
+                    else
+                    {
+                        while (studentToDelete1 != null)
+                        {
+                            students.Remove(studentToDelete1);
+                            studentToDelete1 = students.Find(student => student.Name == name);
+                        }
+                        Console.WriteLine("Deletion done.");
+                    }
+                    break;
+            }
+
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+            Console.Clear();
         }
         static void Summary()
         {
 
         }
         static void LoadData()
+        {
+
+        }
+        static void SaveDataToTextFile()
         {
 
         }

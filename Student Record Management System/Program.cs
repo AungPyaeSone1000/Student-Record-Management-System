@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -49,7 +50,6 @@ namespace Student_Record_Management_System
                             break;
                         case 6:
                             Console.Clear();
-                            SaveDataToTextFile();
                             Console.WriteLine("Exitiing Program.");
                             condition = false;
                             break;
@@ -66,6 +66,7 @@ namespace Student_Record_Management_System
                     Console.WriteLine("Invalid Input. Please try again");
                     Thread.Sleep(1200);
                 }
+                SaveDataToTextFile();
             } 
         }
         static void AddNewStudent()
@@ -242,15 +243,62 @@ namespace Student_Record_Management_System
         }
         static void Summary()
         {
-
-        }
-        static void LoadData()
-        {
+            int numberOfStudent = students.Count;
+            Console.WriteLine($"Number of students is {numberOfStudent}.");
+            double maxGPA = students[0].GPA;
+            double minGPA = students[0].GPA;
+            foreach (var student in students)
+            {
+                if (student.GPA > maxGPA)
+                {
+                    maxGPA = student.GPA; 
+                }
+                if (student.GPA < minGPA)
+                { 
+                    minGPA = student.GPA; 
+                }
+            }
+            Console.WriteLine($"The highest GPA is {maxGPA}.");
+            Console.WriteLine($"The lowest GPA is {minGPA}.");
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+            Console.Clear();
 
         }
         static void SaveDataToTextFile()
         {
+            string fileName = "ListOfStudents.txt";
+            StreamWriter writer = new StreamWriter(fileName);
+            foreach (Student student in students)
+            {
+                writer.WriteLine(student.Name);
+                writer.WriteLine(student.ID);
+                writer.WriteLine(student.GPA);
+            }
+            writer.Flush();
 
+        }
+        static void LoadData()
+        {
+            string fileName = "ListOfStudents.txt";
+            if (File.Exists(fileName))
+            {
+                StreamReader reader = new StreamReader(fileName);
+                string name;
+                while ((name = reader.ReadLine()) != null)
+                {
+                    int id = int.Parse(reader.ReadLine());
+                    double gpa = Convert.ToDouble(reader.ReadLine());
+                    students.Add(new Student
+                    {
+                        Name = name,
+                        ID = id,
+                        GPA = gpa
+                    });
+                }
+                
+                reader.Close();
+            }
         }
     }
 }
